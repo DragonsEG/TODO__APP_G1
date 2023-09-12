@@ -31,7 +31,7 @@ In today's software development landscape, APIs are not just optional but integr
 ## 3) Why is REST API so popular?
 ## Defining REST and API
 
-Before we dive deeper, let's establish clear definitions for the terms REST, API, and RESTful:
+ let's establish clear definitions for the terms REST, API, and RESTful:
 
 **API (Application Programming Interface):** An API is a set of definitions and protocols designed for building and integrating application software. In simple terms, it's the language that allows you to communicate with a computer or system, making requests for information or actions.
 
