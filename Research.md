@@ -250,17 +250,17 @@ The first real step is the Django REST Framework setup.
 To isolate dependencies, it would be great if you could build a virtual environment. But you can skip this step as well. From inside your projects folder, you can execute the below-mentioned command to create the virtual environment:
 
 ```
-`python -m venv django env`
+python -m venv django env
 ```
 Then, to activate it, run:
 ```
-`source./django env/bin/activate`
+source./django env/bin/activate
 ```
 Do not forget that each time you open a new terminal session, you must restart your virtual environment. The environment’s name will start to appear in the shell prompt after it is enabled.
 
 It’s time to use the following commands in your terminal to navigate to an empty folder and install Django REST framework:
 ```
-`pip install django_rest_framework`
+pip install django_rest_framework
 ```
 ### 3. Creating a Django App
 
@@ -270,35 +270,43 @@ You don’t need to install an additional database because Django apps come with
 
 So, in order to create a Django app, we have to create a Django project first. Let’s call it `app`. Run this command:
 ```
-`django-admin startproject app`
+django-admin startproject app
 ```
-We are now creating the Django app called `healthapp`.
+We are now creating the Django app calle `healthapp`.
 ```
-`django-admin startapp healthapp`
+django-admi startapp healthapp
 ```
 ### 4. Registering the Settings of the App Project and APP URLs
 
 In the `INSTALLED_APPS` file, you need to register the `healthapp` as well as the Django REST Framework in the project settings. This is an important step as Django won’t recognize your app without registration.
-```
-`# Application definition`
 
-`INSTALLED_APPS = [   'django.contrib.admin',   'django.contrib.auth',   'django.contrib.contenttypes',   'django.contrib.sessions',   'django.contrib.messages',   'django.contrib.staticfiles',   healthapp,   'rest_framework',   ]`
-```
+
 Now, as shown below, you have to register the app URLs of `healthapp` in the `urls.py` file:
-```
-`from django.contrib import admin   from django.urls import path, include`
 
-`urlpatterns = [   path('admin/', admin.site.urls),   path('', include(healthapp.urls')),   ]`
+```
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [   path('admin/', admin.site.urls),
+                   path('', include(healthapp.urls')),   ]
+
 ```
 ### 5. Creating a REST API View
 
 In order to prevent errors, add a dummy view to the `views.py` file of the app. From the Django REST framework, you first have to import the `@apiview` decorator and `Response` object.
 
 This is because `@apiview` displays the API while `Response` returns sterilized data in JSON format.
-```
-`from django.shortcuts import render   from rest_framework.response import Response   from rest_framework.decorators import api_view`
 
-`# Create your views here.   @api_view(['GET'])   def getData(request):   return Response()`
+```
+from django.shortcuts import render  
+ from rest_framework.response import Response  
+ from rest_framework.decorators import api_view
+
+# Create your views here. 
+  @api_view(['GET'])   
+def getData(request):  
+ return Response()
 
 ```
 ### 6. Building a URL Path for the App
@@ -306,9 +314,9 @@ This is because `@apiview` displays the API while `Response` returns sterilized 
 Now for the Django REST Framework API view, you need to build a URL path. Here’s the endpoint representing the `newapp` data.
 
 ```
-`from django.urls import path   from . import views   from django.conf import settings`
+from django.urls import path   from . import views   from django.conf import settings
 
-`urlpatterns = [   path('', views.getData),   path('post/', views.postData),   ]`
+urlpatterns = [   path('', views.getData),   path('post/', views.postData),   ]
 
 ```
 ### 7. Creating a Model for the App
@@ -316,30 +324,35 @@ Now for the Django REST Framework API view, you need to build a URL path. Here�
 The name of the model class of our app is `Data` and this is how it should look:
 
 ```
-`from django.db import models`
+from django.db import models
 
-`# Create your models here.   class Data(models.Model):   name = models.CharField(max_length=200)   description = models.CharField(max_length=500)`
+# Create your models here.
+class Data(models.Model):
+  user = models.ForeignKey(User, on_delete=models.CASCADE, null=True , blank=True)
+    title = models.CharField(max_length=200 )
+    description =  models.TextField(null=True, blank=True)
+    created =  models.DateTimeField(auto_now_add=True)
+    complete =  models.BooleanField(default=False) 
 
 ```
 Now in the `admin.py` file, you need to register the model. Here’s how:
 
 ```
-`from django.contrib import admin   from .models import Data`
+from django.contrib import admin
+ from .models import Data
 
-`# Register your models here.   admin.site.register(Data)`
+# Register your models here.
+  admin.site.register(Data)
 
 ```
 ### 8. Migrating the App
 
 At this stage, we have to create tables in the SQLite database by making migrations. Run the command:
 
-```
-`python manage.py makemigrations healthapp`
 
-```
 Now run another command to implement those migrations:
 
-If you are successful at migrating the app, the data will create tables for the `healthapp app`. And it should look like this:
+If you are successful at migrating the app, the data will create tables for the  like `healthapp app`. And it should look like this:
 
 ![https://d2ms8rpfqc4h24.cloudfront.net/1_6386292ed6.jpg](https://d2ms8rpfqc4h24.cloudfront.net/1_6386292ed6.jpg)
 
@@ -360,9 +373,9 @@ And if you want to manually enter data into the database, you can utilize the Py
 To create our REST API, we are going to set up and use the Django admin interface. Run:
 
 ```
-`python manage.py createsuperuser`
-
+python manage.py createsuperuser
 ```
+
 You then have to enter your email address, username, and password once prompted. And here’s the link to open the admin page after that:
 
 [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
@@ -387,14 +400,7 @@ Finally, it’s time to create a REST API.
 
 To enable APIs to read data more easily, `serializers` transform complex Django models into JSON objects.
 
-For that, the first thing you have to do is to create a new file in the `serializer.py` app.
 
-```
-`from rest_framework import serializers   from .models import Data`
-
-`class DataSerializer(serializers.ModelSerializer):   class Meta:   model=Data   fields=('name','description')`
-
-```
 The `ModelSerializer` class is the base class for the `DataSerializer` class, which you create after importing the serializers module from the `rest_framework` package.
 
 After that, define the fields you need to integrate into the API and the Data model to serialize.
@@ -405,12 +411,8 @@ Using the `serializers` and Data models, we now have to update the API view.
 
 Specify a GET method first, using `Data.Objects.all()` to retrieve all the data from the database. After serializing the data, return it as a JSON-formatted response.
 
-```
-`from django.shortcuts import render   from rest_framework.response import Response   from rest_framework.decorators import api\_view   from .models import Data   from .serializer import DataSerializer`
 
-`# Create your views here.   @api_view(['GET'])   def getData(request):   app = Data.objects.all()   serializer = DataSerializer(app, many=True)   return Response(serializer.data)`
 
-```
 [https://127.0.0.1:8000/](https://127.0.0.1:8000/) - navigate to this link and you will see that the API is displaying the data from the database:
 
 ![https://d2ms8rpfqc4h24.cloudfront.net/4_08d53846af.jpg](https://d2ms8rpfqc4h24.cloudfront.net/4_08d53846af.jpg)
@@ -423,24 +425,9 @@ Well, you just created a REST API!
 
 Now you need to check if you can add data to the database using the REST API.
 
-Execute the below command to specify a POST method in the view:
 
-```
-`@api_view(['POST'])   def postData(request):   serializer = DataSerializer(data=request.data)   if serializer.is_valid():   serializer.save()   return Response(serializer.data)`
 
-```
-Build an endpoint for the API POST feature by adding a path in the `urls.py` file:
-
-```
-`urlpatterns = [   path('',views.getData),   path('post/',views.postData),   ]`
-
-```
-After that, navigate to [https://127.0.0.1:8000/post](https://127.0.0.1:8000/post) and you will see the POST endpoint. In the Content section, add JSON format data to the database and click on the POST option. Here we have added a new data type with the following structure:
-
-```
-`{ "component":"vitamins", "factor":"Nutrient level" }`
-
-```
+After that, navigate to [https://127.0.0.1:8000/post](https://127.0.0.1:8000/post) and you will see the POST endpoint. In the Content section, add JSON format data to the database and click on the POST option.
 The data then will be shown in red in JSON format:
 
 ![https://d2ms8rpfqc4h24.cloudfront.net/5_4a567f6aa8.jpg](https://d2ms8rpfqc4h24.cloudfront.net/5_4a567f6aa8.jpg)
