@@ -283,7 +283,7 @@ In the `INSTALLED_APPS` file, you need to register the `healthapp` as well as th
 
 Now, as shown below, you have to register the app URLs of `healthapp` in the `urls.py` file:
 
-```
+```python
 
 from django.contrib import admin
 from django.urls import path, include
@@ -298,7 +298,7 @@ In order to prevent errors, add a dummy view to the `views.py` file of the app. 
 
 This is because `@apiview` displays the API while `Response` returns sterilized data in JSON format.
 
-```
+```python
 from django.shortcuts import render  
  from rest_framework.response import Response  
  from rest_framework.decorators import api_view
@@ -313,7 +313,7 @@ def getData(request):
 
 Now for the Django REST Framework API view, you need to build a URL path. Here’s the endpoint representing the `newapp` data.
 
-```
+```python
 from django.urls import path   from . import views   from django.conf import settings
 
 urlpatterns = [   path('', views.getData),   path('post/', views.postData),   ]
@@ -323,7 +323,7 @@ urlpatterns = [   path('', views.getData),   path('post/', views.postData),   ]
 
 The name of the model class of our app is `Data` and this is how it should look:
 
-```
+```python
 from django.db import models
 
 # Create your models here.
@@ -337,7 +337,7 @@ class Data(models.Model):
 ```
 Now in the `admin.py` file, you need to register the model. Here’s how:
 
-```
+```python
 from django.contrib import admin
  from .models import Data
 
