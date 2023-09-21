@@ -13,7 +13,7 @@ The ToDo App API is a Django REST framework-based web service that allows users 
   - [Usage](#usage)
     - [Authentication](#authentication)
     - [JWT(JSON Web Token) - split file](https://github.com/DragonsEG/TODO__APP_G1/blob/main/Learn_JWT.md)
-  - [Endpoints](#endpoints)
+  - [Endpoints](#What-is-an-API-Endpoint)
     - [Get all tasks:](#get-all-tasks)
     - [Create a new task:](#create-a-new-task)
     - [Request Body:](#request-body)
@@ -86,7 +86,18 @@ Request Body:
 Authorization: Bearer <access_token>
 
 
-## Endpoints
+# What is an API Endpoint?
+
+
+Simply put, an endpoint is one end of a communication channel. When an API interacts with another system, the touchpoints of this communication are considered endpoints. For APIs, an endpoint can include a URL of a server or service. Each endpoint is the location from which APIs can access the resources they need to carry out their function.
+
+APIs work using ‘requests’ and ‘responses.’ When an API requests information from a web application or web server, it will receive a response. The place that APIs send requests and where the resource lives, is called an endpoint.
+
+## Why Are API Endpoints Important?
+
+All over the world, companies leverage APIs to transfer vital information, processes, transactions, and more. API usage will only increase as time goes on, and making sure that each touchpoint in API communication is intact is vital to the success of each API. Endpoints specify where resources can be accessed by APIs and play a key role in guaranteeing the correct functioning of the software that interacts with it.  In short, API performance relies on its ability to communicate effectively with API Endpoints.
+
+
 Here are the available API endpoints:
 
 ### Get all tasks:
